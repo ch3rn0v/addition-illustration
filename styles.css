@@ -1,0 +1,204 @@
+body,
+input {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.task {
+    width: 875px;
+    margin: 0 auto;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+input {
+    border: 2px solid #bbb;
+    border-radius: 5px;
+    text-align: center;
+    color: #000;
+}
+input.disabled {
+    border: 2px solid #fff;
+    pointer-events: none;
+}
+input.wrong {
+    color: red;
+}
+
+.equation input.initial {
+    text-align: left;
+}
+.equation-wrapper {
+    height: 170px;
+    width: 100%;
+}
+.equation {
+    margin: 0 auto;
+    width: 220px;
+    padding-top: 30px;
+}
+.equation > span {
+    padding: 0px 4px;
+    border-radius: 5px;
+    display: inline-block;
+    line-height: 39px;
+    height: 42px;
+}
+.equation > span.highlighted {
+    background-color: rgb(245, 170, 70)
+}
+.equation,
+.equation > input {
+    font-size: 42px;
+}
+.equation > input {
+    width: 60px;
+}
+
+.arrow-illustration-container > * {
+    display: inline;
+}
+.illustraion-one {
+    float: left;
+}
+.illustraion-two {
+    float: left;
+}
+
+:root {
+    --arrow-color: rgb(217, 76, 150);
+    --illustration-height: 100px;
+    --one-division-width: 39px;
+    --num-of-divisions-one: 9;
+    --num-of-divisions-two: 5;
+    --input-width: 18px;
+    --input-arc-vertical-margin: 4px;
+    --arrow-point-size: 12px;
+    /* Math magic to make the arrow start
+    and finish at the exact desired positions.
+    Part 1. */
+    --cathetus-one: calc(var(--one-division-width) * var(--num-of-divisions-one) / 2);
+    --radius-one: calc(var(--cathetus-one) * 1.4142);
+    --side-len-one: calc(var(--radius-one) * 2 - 4px);
+    --cathetus-two: calc(var(--one-division-width) * var(--num-of-divisions-two) / 2);
+    --radius-two: calc(var(--cathetus-two) * 1.4142);
+    /* '-4px' absent to account for the point
+    where two arrows overlap. This point has the width
+    of border-width * 2, 4px in this case. */
+    --side-len-two: calc(var(--radius-two) * 2);
+}
+
+.illustraion.disabled {
+    display: none;
+}
+.illustraion input {
+    font-size: 21px;
+    height: 27px;
+    width: var(--input-width);
+    position: relative;
+}
+.illustraion-one input {
+    left: calc(var(--cathetus-one) - var(--input-width) / 2);
+    top: calc(var(--illustration-height) - (var(--radius-one) - var(--cathetus-one)) - var(--input-arc-vertical-margin));
+}
+.illustraion-two input {
+    left: calc(-2 * (var(--radius-one) - var(--cathetus-one)) + var(--cathetus-two) - var(--input-width) / 2);
+    top: calc(var(--illustration-height) - (var(--radius-two) - var(--cathetus-two)) - var(--input-arc-vertical-margin));
+}
+
+.arrow > .shaft {
+    position: relative;
+    border: 2px solid var(--arrow-color);
+    border-color: var(--arrow-color) transparent transparent transparent;
+    border-radius: 50% 50% 0 0;
+}
+.arrow .point {
+    width: var(--arrow-point-size);
+    height: var(--arrow-point-size);
+    position: relative;
+}
+.arrow-one > .shaft {
+    width: var(--side-len-one);
+    height: var(--side-len-one);
+    /* Math magic to make the arrow start
+    and finish at the exact desired positions.
+    Part 2. */
+    left: calc(-1 * (var(--radius-one) - var(--cathetus-one)));
+    top: calc(var(--illustration-height) - (var(--radius-one) - var(--cathetus-one)));
+}
+.arrow-one .point-bot {
+    border-bottom: 2px solid var(--arrow-color);
+    left: calc(var(--cathetus-one) * 2 - var(--arrow-point-size));
+    /* 2px is a magic number to make arrow look better */
+    top: calc(-2 * var(--radius-one) + var(--illustration-height) - var(--arrow-point-size) - 2px);
+    transform:rotate(12deg);
+    -webkit-transform: rotate(12deg);
+    -moz-transform:rotate(12deg);
+    -ms-transform: rotate(12deg);
+}
+.arrow-one .point-right {
+    border-right: 2px solid var(--arrow-color);
+    /* 2px is arrow's point border width */
+    left: calc(var(--cathetus-one) * 2 - var(--arrow-point-size) - 4px);
+    /* 3px is a magic number to make arrow look better */
+    top: calc(-2 * var(--radius-one) + var(--illustration-height) - 2 * var(--arrow-point-size));
+    transform:rotate(-16deg);
+    -webkit-transform: rotate(-16deg);
+    -moz-transform:rotate(-16deg);
+    -ms-transform: rotate(-16deg);
+}
+.arrow-two > .shaft {
+    width: var(--side-len-two);
+    height: var(--side-len-two);
+    /* Math magic to make the arrow start
+    and finish at the exact desired positions.
+    Part 3. */
+    /* 4px is substracted to account for the overlapping point.
+    This point has the width of border-width * 2, 4px in this case. */
+    left: calc(-2 * (var(--radius-one) - var(--cathetus-one)) - (var(--radius-two) - var(--cathetus-two)) - 4px);
+    top: calc(var(--illustration-height) - (var(--radius-two) - var(--cathetus-two)));
+}
+.arrow-two .point-bot {
+    border-bottom: 2px solid var(--arrow-color);
+    /* 2px is arrow's point border width */
+    left: calc(-2 * var(--radius-one) + 2 * var(--cathetus-one) + 2 * var(--cathetus-two) - var(--arrow-point-size) - 1px);
+    /* 6px is a magic number to make arrow look better */
+    top: calc(-2 * var(--radius-two) + var(--illustration-height) - var(--arrow-point-size) - 6px);
+    transform:rotate(12deg);
+    -webkit-transform: rotate(12deg);
+    -moz-transform:rotate(12deg);
+    -ms-transform: rotate(12deg);
+}
+.arrow-two .point-right {
+    border-right: 2px solid var(--arrow-color);
+    /* 2px is arrow's point border width */
+    left: calc(-2 * var(--radius-one) + 2 * var(--cathetus-one) + 2 * var(--cathetus-two) - var(--arrow-point-size) - 4px);
+    /* 6px is a magic number to make arrow look better */
+    top: calc(-2 * var(--radius-two) + var(--illustration-height) - 2 * var(--arrow-point-size) - 4px);
+    transform:rotate(-16deg);
+    -webkit-transform: rotate(-16deg);
+    -moz-transform:rotate(-16deg);
+    -ms-transform: rotate(-16deg);
+}
+
+.arrow-illustration-container {
+    /* The distance between the ruler's leftmost pixel
+    and the ruler's zero position is 37px.
+    Adjust the arrows' container to the ruler's
+    zero position*/
+    position: relative;
+    left: 37px;
+    /* And set fixed height */
+    /* 11px is the difference between input height
+    with default font-size (13.333px) and the one
+    with current font-size (21px). */
+    height: calc(var(--illustration-height) + 11px);
+}
+
+.ruler-sprite {
+    background-image: url('./img/sprite.png');
+    width: 875px;
+    height: 83px;
+}
